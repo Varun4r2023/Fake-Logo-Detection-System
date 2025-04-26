@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fake Logo Detection Chatbot</title>
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="https://static.vecteezy.com/system/resources/previews/026/309/247/non_2x/robot-chat-or-chat-bot-logo-modern-conversation-automatic-technology-logo-design-template-vector.jpg">
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: url('https://static.vecteezy.com/system/resources/previews/020/436/122/non_2x/chatbot-ai-artificial-intelligence-technology-hitech-concept-chatbot-application-smart-bot-open-ai-line-technology-abstract-design-for-chatting-web-banner-background-transformation-vector.jpg') no-repeat center center fixed;
+            background-size: cover;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .chat-container {
+            width: 90%;
+            max-width: 400px;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        h2 {
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        .chat-box {
+            height: 300px;
+            overflow-y: auto;
+            border: 1px solid #ccc;
+            padding: 10px;
+            border-radius: 5px;
+            background: #fff;
+        }
+
+        .bot-message, .user-message {
+            padding: 8px;
+            border-radius: 5px;
+            margin: 5px 0;
+        }
+
+        .bot-message {
+            background: #ddd;
+            color: black;
+            text-align: left;
+        }
+
+        .user-message {
+            background: #008CBA;
+            color: white;
+            text-align: right;
+        }
+
+        .question-list {
+            margin-top: 10px;
+            text-align: left;
+        }
+
+        .question-button {
+            display: block;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            padding: 8px;
+            border-radius: 5px;
+            margin: 5px 0;
+            width: 100%;
+            text-align: left;
+            cursor: pointer;
+        }
+
+        .question-button:hover {
+            background-color: #218838;
+        }
+
+        .input-container {
+            display: flex;
+            margin-top: 10px;
+        }
+
+        #user-input {
+            flex: 1;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .send-button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 5px;
+            margin-left: 5px;
+            cursor: pointer;
+        }
+
+        .send-button:hover {
+            background-color: #0056b3;
+        }
+
+        .back-button {
+            margin-top: 10px;
+            display: block;
+            background-color: #dc3545;
+            color: white;
+            padding: 10px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            width: 100%;
+        }
+
+        .back-button:hover {
+            background-color: #c82333;
+        }
+    </style>
+</head>
+<body>
+    <div class="chat-container">
+        <h2>Fake Logo Detection Chatbot</h2>
+
+        <div class="chat-box" id="chat-box">
+            <div class="bot-message">Hello! Select a question below or type your own:</div>
+        </div>
+
+        <div class="question-list" id="question-list">
+            <!-- Questions will be added dynamically here -->
+        </div>
+
+        <!-- User input section -->
+        <div class="input-container">
+            <input type="text" id="user-input" placeholder="Type your question..." onkeypress="handleKeyPress(event)">
+            <button class="send-button" onclick="sendMessage()">Send</button>
+        </div>
+
+        <button class="back-button" onclick="window.location.href='/'">Back to Home</button>
+    </div>
+
+    <script>
+        const predefinedResponses = {
+            "Hi" :"Hello, How can I help you?",
+          
+            "What is fake logo detection?": "Fake logo detection is the process of identifying counterfeit or altered brand logos using image processing and machine learning techniques.",
+            
+            "What is the purpose of this project?": 
+                "This project detects fake logos using deep learning. Users upload an image of a logo, and the system analyzes it using a trained model to determine whether the logo is real or fake.",
+            
+            "How does the fake logo detection process work?": 
+                "1. The user uploads a logo image.\n" +
+                "2. The image is resized and normalized for analysis.\n" +
+                "3. The deep learning model predicts if the logo is fake or real based on visual features.\n" +
+                "4. The result is displayed to the user along with the uploaded image.",
+
+            "Which technologies are used in this project?": 
+                "Flask (Backend for handling requests and responses), TensorFlow/Keras (Deep learning framework for model training and prediction), OpenCV (Image processing for resizing and normalization), NumPy (Handling numerical computations), HTML/CSS/JavaScript (Frontend for UI).",
+
+            "Need More Information": 
+                '<button onclick="window.open(\'https://www.researchgate.net/publication/367286467_Online_Fake_Logo_Detection_System\', \'_blank\')" style="padding: 8px 12px; background-color: #007bff; color: white; border: none; border-radius: 5px; cursor: pointer;">Click This</button>'
+        };
+
+        function displayQuestions() {
+            const questionList = document.getElementById("question-list");
+            questionList.innerHTML = "";
+
+            Object.keys(predefinedResponses).forEach(question => {
+                let button = document.createElement("button");
+                button.className = "question-button";
+                button.innerText = question;
+                button.onclick = () => displayAnswer(question);
+                questionList.appendChild(button);
+            });
+        }
+
+        function displayAnswer(question) {
+            let chatBox = document.getElementById("chat-box");
+
+            let userMessageDiv = document.createElement("div");
+            userMessageDiv.className = "user-message";
+            userMessageDiv.innerText = question;
+            chatBox.appendChild(userMessageDiv);
+
+            setTimeout(() => {
+                let botMessageDiv = document.createElement("div");
+                botMessageDiv.className = "bot-message";
+                botMessageDiv.innerHTML = predefinedResponses[question] || "Sorry, I don't have an answer for that.";
+                chatBox.appendChild(botMessageDiv);
+                chatBox.scrollTop = chatBox.scrollHeight;
+            }, 500);
+        }
+
+        function sendMessage() {
+            let userInput = document.getElementById("user-input").value.trim();
+            if (userInput === "") return;
+            
+            displayAnswer(userInput);
+            document.getElementById("user-input").value = "";  // Clear input field
+        }
+
+        function handleKeyPress(event) {
+            if (event.key === "Enter") {
+                sendMessage();
+            }
+        }
+
+        window.onload = displayQuestions;
+    </script>
+</body>
+</html>

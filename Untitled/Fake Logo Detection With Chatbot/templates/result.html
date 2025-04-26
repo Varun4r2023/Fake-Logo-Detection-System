@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Result Page</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" href="https://png.pngtree.com/png-clipart/20210808/original/pngtree-fake-sign-with-red-cross-in-transparent-background-png-image_6616336.jpg" type="image/x-icon">
+
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-image: url('https://static.vecteezy.com/system/resources/thumbnails/002/217/890/small_2x/detective-with-a-flashlight-in-two-different-poses-vector.jpg');
+            background-size: cover;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        h1 {
+            margin-bottom: 20px;
+            font-size: 2.5em;
+            color: #333;
+        }
+        #image-preview {
+            margin-top: 20px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            padding: 20px;
+            background: #fff;
+        }
+        #image-preview img {
+            max-width: 100%;
+            border-radius: 10px;
+        }
+        p {
+            font-size: 1.2em;
+            margin-top: 20px;
+        }
+        .result-box {
+            background-color: white;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            max-width: 400px;
+        }
+        .prediction {
+            font-size: 1.5em;
+            margin-top: 15px;
+            font-weight: bold;
+        }
+        .prediction.fake {
+            color: red;
+        }
+        .prediction.original {
+            color: green;
+        }
+        /* Subtle animation for the image */
+        #image-preview img {
+            transition: transform 0.3s ease-in-out;
+        }
+        #image-preview img:hover {
+            transform: scale(1.05);
+        }
+        .back-button {
+            margin-top: 10px;
+            display: block;
+            background-color: #dc3545;
+            color: white;
+            padding: 10px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            width: 100%;
+        }
+
+        .back-button:hover {
+            background-color: #c82333;
+        }
+    </style>
+    
+</head>
+
+<body>
+    <div>  <div>  <div>
+    <br><br><br><br><br><br>
+    <div class="result-box">
+        
+        <h1>Result</h1>
+        <div id="image-preview">
+            <img src="data:image/jpeg;base64,{{ image }}" alt="Uploaded Image">
+        </div>
+        <p id="prediction" class="prediction">Prediction: {{ prediction }}</p>
+    </div>
+
+    <!-- MP3 files -->
+    <audio id="fake-logo-sound" src="/static/fakelogodetected.mp3" preload="auto"></audio>
+    <audio id="original-logo-sound" src="/static/reallogodetected.mp3" preload="auto"></audio>
+    <br>
+    <button class="back-button" onclick="window.location.href='/'">Back to Home</button>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const prediction = '{{ prediction }}';
+            const predictionElement = document.getElementById('prediction');
+            
+            function handlePredictionResult(prediction) {
+                if (prediction.toLowerCase().includes('fake')) {
+                    predictionElement.textContent = 'Prediction: Fake Logo Detected';
+                    predictionElement.classList.add('fake');
+                    document.getElementById('fake-logo-sound').play();
+                } else if (prediction.toLowerCase().includes('real')) {
+                    predictionElement.textContent = 'Prediction: Real Logo Detected';
+                    predictionElement.classList.add('original');
+                    document.getElementById('original-logo-sound').play();
+                }
+            }
+
+            // Call the function after user interaction (e.g., click)
+            document.body.addEventListener('click', function() {
+                handlePredictionResult(prediction);
+            });
+
+            // Automatically handle the prediction result without waiting for a click
+            handlePredictionResult(prediction);
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home Page</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" href="https://png.pngtree.com/png-clipart/20210808/original/pngtree-fake-sign-with-red-cross-in-transparent-background-png-image_6616336.jpg" type="image/x-icon">
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-image: url('https://static.vecteezy.com/system/resources/thumbnails/002/217/890/small_2x/detective-with-a-flashlight-in-two-different-poses-vector.jpg');
+            background-size: cover;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 400px;
+            background: rgb(255, 255, 255);
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+            color: white;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
+        }
+
+        h1 {
+            margin-bottom: 20px;
+            font-size: 36px;
+            color:black;
+            text-shadow: 1px 1px 3px rgba(208, 53, 53, 0.7);
+        }
+
+        h2 {
+            margin-bottom: 20px;
+            font-size: 36px;
+            color: transparent; 
+            background: linear-gradient(90deg, red, orange, yellow, green, blue, indigo, violet); 
+            -webkit-background-clip: text; 
+            background-clip: text; 
+            text-shadow: 1px 1px 3px rgba(208, 53, 53, 0.7);
+        }
+
+        form {
+            margin-bottom: 20px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        input[type="file"] {
+            display: none;
+        }
+
+        .custom-upload-button {
+            background-color: #4CAF50;
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin-top: 10px;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .custom-upload-button:hover {
+            background-color: #45a049;
+        }
+
+        #image-preview {
+            display: none;
+            margin-top: 20px;
+        }
+
+        #image-preview img {
+            max-width: 100%;
+            border-radius: 5px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .message {
+            margin-top: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        /* Chatbot button styling */
+        .chatbot-button {
+            background-color: #007bff;
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            font-size: 16px;
+            margin-top: 10px;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .chatbot-button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <u><h2>Welcome to Fake Logo Detection Webpage</h2></u><br>
+        <h1>Upload an Image</h1>
+        <form action="/result" method="post" enctype="multipart/form-data">
+            <label for="file" class="custom-upload-button">Choose File</label>
+            <input type="file" id="file" name="file" accept="image/*">
+            
+      
+        <div id="image-preview"></div>
+            <input type="submit" class="custom-upload-button" value="Check">
+        </form>
+
+
+        <div id="image-preview"></div>
+
+        <!-- Chatbot Redirection Button -->
+        <a href="{{ url_for('chatbot') }}" class="custom-upload-button">Chat with AI</a>
+
+    </div>
+
+    <script>
+        document.getElementById('file').addEventListener('change', function(event) {
+            var file = event.target.files[0];
+            if (file) {
+                var reader = new FileReader();
+                reader.onload = function(e) {
+                    var img = document.createElement('img');
+                    img.src = e.target.result;
+                    document.getElementById('image-preview').innerHTML = '';
+                    document.getElementById('image-preview').appendChild(img);
+                    document.getElementById('image-preview').style.display = 'block';
+                }
+                reader.readAsDataURL(file);
+            }
+        });
+    </script>
+</body>
+</html>

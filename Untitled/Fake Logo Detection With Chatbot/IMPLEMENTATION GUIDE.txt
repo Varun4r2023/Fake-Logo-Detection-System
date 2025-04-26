@@ -1,0 +1,27 @@
+Topic-Fake Logo Detection
+Domain- Deep Learning
+Algorithm-Image processing and CNN
+Interface-Website
+Price- 1500RS (code with Implementation guide)-TELEGRAM( https://t.me/itz_jp_queen )
+----------------
+
+INSTALL
+----------------
+PYTHON 3.11- https://www.youtube.com/watch?v=m9I-YpOjXVQ
+----------------
+IMPLEMENTATION
+----------------
+1.EXTRACT ZIP FILE
+2.OPEN FILE DIRECTORY IN CMD (COMMAND PROMPT)
+3.AFTER OPENING CMD 
+C:\Users\HP\Desktop\PROJECTS\Fake Logo Detection With Chatbot-(now type)
+
+pip install -r requirements.txt
+
+python app.py
+
+4.NOW ITS RUNNING COPY AND PASTE URL IN BROWSER
+
+http://localhost:5000/
+
+------------------------------
